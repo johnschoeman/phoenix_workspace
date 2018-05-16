@@ -1,5 +1,5 @@
-defmodule HelloWeb.Router do
-  use HelloWeb, :router
+defmodule TestControllersWeb.Router do
+  use TestControllersWeb, :router
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -13,19 +13,15 @@ defmodule HelloWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/", HelloWeb do
+  scope "/", TestControllersWeb do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
-    get "/hello", HelloController, :index
-    get "/hello/:messenger", HelloController, :show
-
-    resources "/users", UserController
   end
 
-
   # Other scopes may use custom stacks.
-  # scope "/api", HelloWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", TestControllersWeb do
+    pipe_through :api
+    resources "/users", UserController, except: [:new, :edit]
+  end
 end
